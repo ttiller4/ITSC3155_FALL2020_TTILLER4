@@ -16,8 +16,8 @@ def test(got, expected):
 # Calls the functions in pythonBasics1 with interesting inputs.
 def main():
     # set which functions to test
-    check_starts_with = True
-    check_starts_with_vowel = False
+    check_starts_with = False
+    check_starts_with_vowel = True
     check_max_min_sum = False
 
     if check_starts_with:
