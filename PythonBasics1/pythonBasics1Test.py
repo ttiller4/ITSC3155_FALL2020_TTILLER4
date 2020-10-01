@@ -17,8 +17,8 @@ def test(got, expected):
 def main():
     # set which functions to test
     check_starts_with = False
-    check_starts_with_vowel = True
-    check_max_min_sum = False
+    check_starts_with_vowel = False
+    check_max_min_sum = True
 
     if check_starts_with:
         print('starts_with')
