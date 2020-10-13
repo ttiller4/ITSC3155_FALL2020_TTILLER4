@@ -45,4 +45,11 @@ def starts_with_consonant(s):
 def binary_multiple_of_4(s):
   # YOUR CODE HERE
 
+  x = r"(^[0|1]*0+$)"
+
+  if re.search(x,s):
+      return True
+  else:
+      return False
   return
+
