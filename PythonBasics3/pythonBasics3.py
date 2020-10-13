@@ -14,8 +14,11 @@ import re
 # Note: Be sure to use RegEx!
 def starts_with_number(s):
   # YOUR CODE HERE
+  a = re.findall("\A[0-9]", s)
+  if a:
+      return True
 
-  return
+  return False
 
 # # Part B. starts_with_consonant
 # Define a function starts_with_consonant(s) that takes a string and returns true
