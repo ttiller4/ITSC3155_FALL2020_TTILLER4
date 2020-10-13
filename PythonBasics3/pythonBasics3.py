@@ -28,6 +28,12 @@ def starts_with_number(s):
 def starts_with_consonant(s):
   # YOUR CODE HERE
 
+  start=r"(^[^aeiouAEIOU|\W|])"
+
+  if re.search(start, s):
+      return True
+  else:
+      return False
   return
 
 
