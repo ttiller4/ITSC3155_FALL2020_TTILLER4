@@ -32,5 +32,15 @@ def array2d_2_dict(contact_info, contacts):
 def dict_2_array(contacts):
     # YOUR CODE HERE
 
-    return
+    a = []
+    b = []
+    c = []
+
+    for key in contacts:
+        b.append(key)
+        a.append(contacts[key]["phone"])
+        c.append(contacts[key]["email"])
+
+    x = [c, a, b]
+    return x
 

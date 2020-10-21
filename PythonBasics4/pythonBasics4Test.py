@@ -19,8 +19,8 @@ def test(got, expected):
 def main():
     # set which functions to test
     array_2_dict = False
-    array2d_2_dict = True
-    dict_2_array = False
+    array2d_2_dict = False
+    dict_2_array = True
 
     if array_2_dict:
         print('array_2_dict')
