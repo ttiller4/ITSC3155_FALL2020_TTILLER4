@@ -19,7 +19,14 @@ def array_2_dict(emails, contacts):
 def array2d_2_dict(contact_info, contacts):
     # YOUR CODE HERE
 
-    return
+    if(len(contacts) == len(contact_info)):
+        x = 0
+        for key in contacts:
+            y = {"email":contact_info[x][0],"phone":contact_info[x][1]}
+            contacts[key] = y
+            x+=1
+
+    return contacts
 
 # # Part C.
 def dict_2_array(contacts):
