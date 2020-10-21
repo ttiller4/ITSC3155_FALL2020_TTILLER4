@@ -8,7 +8,12 @@
 def array_2_dict(emails, contacts):
     # YOUR CODE HERE
 
-    return
+   if(len(contacts) == len(emails)):
+       x=0
+       for key in contacts:
+           contacts[key] = emails[x]
+           x+=1
+   return contacts
 
 # # Part B.
 def array2d_2_dict(contact_info, contacts):
