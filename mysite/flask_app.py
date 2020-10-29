@@ -7,7 +7,10 @@ app = Flask(__name__)
 
 @app.route('/index')
 def hello_world():
-    return render_template('index.html')
+
+    a_user = {'name': 'Troy Tillery', 'email':'ttiller4@uncc.edu'}
+
+    return render_template("index.html", user = a_user)
 
 
 
