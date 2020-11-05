@@ -2,6 +2,7 @@
 
 from flask import Flask
 from flask import render_template
+from flask import request
 
 app = Flask(__name__)
 
@@ -30,11 +31,15 @@ def get_note(note_id):
 
     return render_template('note.html', note=notes[int(note_id)])
 
-@app.route('/notes/new')
+@app.route('/notes/new', methods=['GET', 'POST'])
 def new_note():
     a_user = {'name': 'Mogli', 'email': 'mogli@uncc.edu'}
 
-    return render_template('new.html', user=a_user)
+    print('request method is', request.method)
+    if request.method == 'POST':
+        return '<h1> POST method used for this request </h1>'
+    else:
+        return render_template('new.html', user=a_user)
 
 
 
