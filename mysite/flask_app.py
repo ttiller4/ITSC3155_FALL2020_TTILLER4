@@ -3,9 +3,14 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask import redirect, url_for
 
 app = Flask(__name__)
 
+notes = {1: {'title': 'First Note', 'text': 'This is my first note', 'date': '10-1-2020'},
+             2: {'title': 'Second Note', 'text': 'This is my second note', 'date': '10-2-2020'},
+             3: {'title': 'Third Note', 'text': 'This is my third note', 'date': '10-3-2020'}
+             }
 
 @app.route('/index')
 def index():
@@ -15,10 +20,7 @@ def index():
 
 @app.route('/notes')
 def get_notes():
-        notes = {1: {'title': 'First Note', 'text': 'This is my first note', 'date': '10-1-2020'},
-             2: {'title': 'Second Note', 'text': 'This is my second note', 'date': '10-2-2020'},
-             3: {'title': 'Third Note', 'text': 'This is my third note', 'date': '10-3-2020'}
-             }
+
         return render_template('notes.html', notes=notes)
 
 @app.route('/notes/<note_id>')
@@ -35,10 +37,17 @@ def get_note(note_id):
 def new_note():
     a_user = {'name': 'Mogli', 'email': 'mogli@uncc.edu'}
 
-    print('request method is', request.method)
     if request.method == 'POST':
-        request_data = request.form
-        return f"data: {request_data} !"
+        title = request.form['title']
+        text = request.form['noteText']
+        from datetime import date
+        today = date.today()
+        today = today.strftime("%m-%d-%Y")
+        id = len(notes)+1
+        notes[id] = {'title': title, 'text':text, 'date':today}
+
+        return redirect(url_for('get_notes', name = a_user))
+
     else:
         return render_template('new.html', user=a_user)
 
