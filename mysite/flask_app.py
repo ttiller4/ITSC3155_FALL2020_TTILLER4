@@ -4,6 +4,18 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask import redirect, url_for
+from database import db
+from models import Note as Note
+from models import User as User
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql:///flask_note_app.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
+#  Bind SQLAlchemy db object to this Flask app
+db.init_app(app)
+
+# Setup models
+with app.app_context():
+    db.create_all()   # run under the app context
 
 app = Flask(__name__)
 
@@ -12,26 +24,27 @@ notes = {1: {'title': 'First Note', 'text': 'This is my first note', 'date': '10
              3: {'title': 'Third Note', 'text': 'This is my third note', 'date': '10-3-2020'}
              }
 
+@app.route('/')
 @app.route('/index')
 def index():
-    a_user = {'name': 'Mogli', 'email':'mogli@uncc.edu'}
+    a_user =  db.session.query(User).filter_by(email='mogli@uncc.edu')
 
     return render_template('index.html', user = a_user)
 
 @app.route('/notes')
 def get_notes():
+        a_user = db.session.query(User).filter_by(email='mogli@uncc.edu')
+        my_notes = db.session.query(Note).all()
 
-        return render_template('notes.html', notes=notes)
+        return render_template('notes.html', notes=my_notes, user=a_user)
 
 @app.route('/notes/<note_id>')
 def get_note(note_id):
 
-    notes = {1: {'title': 'First Note', 'text': 'This is my first note', 'date': '10-1-2020'},
-             2: {'title': 'Second Note', 'text': 'This is my second note', 'date': '10-2-2020'},
-             3: {'title': 'Third Note', 'text': 'This is my third note', 'date': '10-3-2020'}
-             }
+    a_user = db.session.query(User).filter_by(email='mogli@uncc.edu')
+    my_note = db.session.query(Note).filter_by(id=note_id)
 
-    return render_template('note.html', note=notes[int(note_id)])
+    return render_template('note.html', note=my_note, user=a_user)
 
 @app.route('/notes/new', methods=['GET', 'POST'])
 def new_note():
@@ -43,12 +56,16 @@ def new_note():
         from datetime import date
         today = date.today()
         today = today.strftime("%m-%d-%Y")
-        id = len(notes)+1
-        notes[id] = {'title': title, 'text':text, 'date':today}
+        newEntry = Note(title, text, today)
+        db.session.add(newEntry)
+        db.session.commit()
 
         return redirect(url_for('get_notes', name = a_user))
 
     else:
+
+        a_user = db.session.query(User).filter_by(email='mogli@uncc.edu')
+
         return render_template('new.html', user=a_user)
 
 
