@@ -7,13 +7,14 @@ from flask import redirect, url_for
 from database import db
 from models import Note as Note
 from models import User as User
+from flask_app import app as application
 
 app = Flask(__name__)
 
-notes = {1: {'title': 'First Note', 'text': 'This is my first note', 'date': '10-1-2020'},
-             2: {'title': 'Second Note', 'text': 'This is my second note', 'date': '10-2-2020'},
-             3: {'title': 'Third Note', 'text': 'This is my third note', 'date': '10-3-2020'}
-             }
+#notes = {1: {'title': 'First Note', 'text': 'This is my first note', 'date': '10-1-2020'},
+      #       2: {'title': 'Second Note', 'text': 'This is my second note', 'date': '10-2-2020'},
+       #      3: {'title': 'Third Note', 'text': 'This is my third note', 'date': '10-3-2020'}
+        #     }
 
 
 
@@ -32,13 +33,13 @@ with app.app_context():
 @app.route('/')
 @app.route('/index')
 def index():
-    a_user =  db.session.query(User).filter_by(email='mogli@uncc.edu')
+    a_user = db.session.query(User).filter_by(email='ttiller4@uncc.edu').one()
 
     return render_template('index.html', user = a_user)
 
 @app.route('/notes')
 def get_notes():
-        a_user = db.session.query(User).filter_by(email='mogli@uncc.edu')
+        a_user = db.session.query(User).filter_by(email='ttiller4@uncc.edu').one()
         my_notes = db.session.query(Note).all()
 
         return render_template('notes.html', notes=my_notes, user=a_user)
@@ -46,14 +47,14 @@ def get_notes():
 @app.route('/notes/<note_id>')
 def get_note(note_id):
 
-    a_user = db.session.query(User).filter_by(email='mogli@uncc.edu')
+ #   a_user = db.session.query(User).filter_by(email='ttiller4@uncc.edu').one()
     my_note = db.session.query(Note).filter_by(id=note_id)
 
-    return render_template('note.html', note=my_note, user=a_user)
+    return render_template('note.html', note=my_note)
 
 @app.route('/notes/new', methods=['GET', 'POST'])
 def new_note():
-    a_user = {'name': 'Mogli', 'email': 'mogli@uncc.edu'}
+    a_user = {'name': 'Troy', 'email': 'ttiller4@uncc.edu'}
 
     if request.method == 'POST':
         title = request.form['title']
@@ -69,7 +70,7 @@ def new_note():
 
     else:
 
-        a_user = db.session.query(User).filter_by(email='mogli@uncc.edu')
+        a_user = db.session.query(User).filter_by(email='ttiller4@uncc.edu').one()
 
         return render_template('new.html', user=a_user)
 
