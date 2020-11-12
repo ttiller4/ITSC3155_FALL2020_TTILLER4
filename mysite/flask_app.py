@@ -8,7 +8,18 @@ from database import db
 from models import Note as Note
 from models import User as User
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql:///flask_note_app.db'
+app = Flask(__name__)
+
+notes = {1: {'title': 'First Note', 'text': 'This is my first note', 'date': '10-1-2020'},
+             2: {'title': 'Second Note', 'text': 'This is my second note', 'date': '10-2-2020'},
+             3: {'title': 'Third Note', 'text': 'This is my third note', 'date': '10-3-2020'}
+             }
+
+
+
+
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://troytillery:2020hellcaT!@troytillery.mysql.pythonanywhere-services.com/troytillery$default'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 #  Bind SQLAlchemy db object to this Flask app
 db.init_app(app)
@@ -17,12 +28,6 @@ db.init_app(app)
 with app.app_context():
     db.create_all()   # run under the app context
 
-app = Flask(__name__)
-
-notes = {1: {'title': 'First Note', 'text': 'This is my first note', 'date': '10-1-2020'},
-             2: {'title': 'Second Note', 'text': 'This is my second note', 'date': '10-2-2020'},
-             3: {'title': 'Third Note', 'text': 'This is my third note', 'date': '10-3-2020'}
-             }
 
 @app.route('/')
 @app.route('/index')

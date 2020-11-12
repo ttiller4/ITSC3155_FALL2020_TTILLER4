@@ -1,6 +1,6 @@
 from database import db
 
-class Note(db.model):
+class Note(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
     title = db.Column("title", db.String(200))
     text = db.Column("text", db.String(100))
@@ -11,7 +11,7 @@ class Note(db.model):
         self.text = text
         self.date = date
 
-class User(db.model):
+class User(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
     name = db.Column("name", db.String(100))
     email = db.Column("email", db.String(100))
